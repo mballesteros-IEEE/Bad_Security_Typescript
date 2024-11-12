@@ -1,17 +1,29 @@
-// Declaración de variables con tipos
-let nombre: string = "Juan";
-let edad: number = 30;
-let esEstudiante: boolean = true;
+// Use of 'any' which can lead to type errors
+let name: any = "Juan";
+let age: any = "30"; // Error: Age should be a number, not a string
+let isStudent: boolean = true;
 
-// Función que toma dos números y retorna su suma
-function sumar(a: number, b: number): number {
-    return a + b;
+// Function that takes two numbers and returns their sum
+function add(a: any, b: any): any { // Use of 'any' in parameters and return type
+    return a + b; // This can cause string concatenation instead of addition
 }
 
-// Uso de la función
-let resultado: number = sumar(10, 20);
+// Using the function with mixed types
+let result: any = add(10, "20"); // Error: Mixing types can cause errors
 
-console.log(`Nombre: ${nombre}`);
-console.log(`Edad: ${edad}`);
-console.log(`Es estudiante: ${esEstudiante}`);
-console.log(`Resultado de la suma: ${resultado}`);
+console.log(`Name: ${name}`);
+console.log(`Age: ${age}`);
+console.log(`Is student: ${isStudent}`);
+console.log(`Sum result: ${result}`);
+
+// Class with incorrect type usage
+class User {
+    constructor(public name: string, public age: any) { // Use of 'any'
+        if (typeof age !== 'number') {
+            throw new Error("Age must be a number");
+        }
+    }
+}
+
+let user = new User("Ana", "25"); // Error: Age should be a number, not a string
+console.log(`User: ${user.name}, Age: ${user.age}`);
